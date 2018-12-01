@@ -1,0 +1,380 @@
+# Workflow of PCAWG variant calling workflows
+
+workflow:
+  name:  pcawg-somatic-mutation-calling
+  version: "0.0.1"
+
+  env_var:
+    SCORE_TOKEN:
+      type: string
+      is_required: true
+    SONG_TOKEN:
+      type: string
+      is_required: true
+  input:
+    tumor_bam:
+      type: string
+      is_file: true
+      is_required: true
+    normal_bam:
+      type: string
+      is_file: true
+      is_required: true
+    reference_gz:
+      type: string
+      is_file: true
+      default: "[genome.fa.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.fa.gz"
+    reference_gz_fai:
+      type: string
+      is_file: true
+      default: "[genome.fa.gz.fai]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.fa.gz.fai"
+    reference_dict:
+      type: string
+      is_file: true
+      default: "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.dict"
+    delly.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
+      type: string
+      is_file: true
+      default: "[delly-sv.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg_delly_workflow/versions/develop/plain-CWL/descriptor/%2Fdelly_docker%2FDockstore.cwl"
+    delly.reference-gc:
+      type: string
+      is_file: true
+      default: "[hs37d5_1000GP.gc]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-delly/hs37d5_1000GP.gc"
+    delly.exclude-reg:
+      type: string
+      is_file: true
+      default: "[human.hg19.excl.tsv]https://bitbucket.org/weischenfeldt/pcawg_delly_workflow/raw/bfb1820f0c8458f1539e42431aea240d1fb31fe7/delly_docker/extra_data/human.hg19.excl.tsv"
+    gencode-gz:
+      type: string
+      is_file: true
+      default: "[gencode_sort.v19.bed.gz]https://bitbucket.org/weischenfeldt/pcawg_delly_workflow/raw/3b986488d6846525ac31eb2dec3421f4c2a6befc/delly_docker/extra_data/gencode_sort.v19.bed.gz"
+    dkfz.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/blob/develop/Dockstore.json
+      type: string
+      is_file: true
+      default: "[dkfz-caller.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-dkfz-workflow/versions/develop/plain-CWL/descriptor/%2FDockstore.cwl"
+    dkfz.reference-gz:
+      type: string
+      is_file: true
+      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-dkfz/dkfz-workflow-dependencies_150318_0951.tar.gz"
+    sanger.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/CGP-Somatic-Docker/blob/develop/Dockstore_cwl.json
+      type: stirng
+      is_file: true
+      default: "[sanger-caller.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-sanger-cgp-workflow/versions/develop/plain-CWL/descriptor/%2FDockstore.cwl"
+    sanger.refFrom:
+      type: string
+      is_file: true
+      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_CGP_refBundle.tar.gz"
+    sanger.bbFrom:
+      type: string
+      is_file: true
+      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_battenberg.tar.gz"
+    cocleaning.cwl_source:  # for dockstore workflow, we need download the package of all CWL files
+      type: string
+      is_file: true
+      default: "https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/archive/0.1.1.tar.gz"
+    cocleaning.cwl_entry:  # more details to be figured out
+      type: string
+      is_file: true
+      default: gatk-cocleaning-workflow.cwl
+    cocleaning.knownIndels:
+      type: string
+      is_file: true
+      default:
+        - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz"
+        - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz"
+    cocleaning.knownIndelsTbi:
+      type: string
+      is_file: true
+      default:
+        - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi"
+        - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi"
+    cocleaning.knownSites:
+      type: string
+      is_file: true
+      default: "[dbsnp_132_b37.leftAligned.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/dbsnp_132_b37.leftAligned.vcf.gz"
+    cocleaning.knownSitesTbi:
+      type: string
+      is_file: true
+      default: "[dbsnp_132_b37.leftAligned.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/dbsnp_132_b37.leftAligned.vcf.gz.tbi"
+    muse.dockstore_tool:
+      type: string
+      is_file: true
+      default: "[muse.cwl]https://dockstore.org:443/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-muse/versions/0.1.3/plain-CWL/descriptor/%2Fmuse.cwl"
+    muse.known:
+      type: string
+      is_file: true
+      default: "[dbsnp_132_b37.leftAligned.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/dbsnp_132_b37.leftAligned.vcf.gz"
+    muse.known-tbi:
+      type: string
+      is_file: true
+      default: "[dbsnp_132_b37.leftAligned.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/dbsnp_132_b37.leftAligned.vcf.gz.tbi"
+
+    # broad will be added later using local docker run as it's not registered in dockstore yet
+    #broad.cwl_tool:
+    #  type: string
+    #  is_file: true
+    #  default: "[broad/broad.cwl]/path/to/local/broad/cwl"
+
+    # filtering/merging steps will be added later
+    #oxog.git_repo:
+    #  type: string
+    #  is_file: true
+    #  default: "github.com/ICGC-TCGA-PanCancer/OxoG-Dockstore-Tools/tree/1.0.0"
+    #oxog.entry_cwl:
+    #  type: string
+    #  is_file: true
+    #  default: "oxog_varbam_annotate_wf.cwl"
+    #minibam.git_repo:
+    #  type: string
+    #  is_file: true
+    #  default: "github.com/ICGC-TCGA-PanCancer/pcawg-minibam/tree/1.0.0"
+    #minibam.entry_cwl:
+    #  type: string
+    #  is_file: true
+    #  default: "pcawg_minibam_wf.cwl"
+    #sv-merge.git_repo:
+    #  type: string
+    #  is_file: true
+    #  default: "[sv-merge.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/registry.hub.docker.com%2Fweischenfeldt%2Fpcawg_sv_merge/versions/1.0.2/plain-CWL/descriptor/%2FDockstore.cwl"
+    #sv-merge.dranger:
+    #  type: string
+    #  is_file: true
+    #sv-merge.snowman:
+    #  type: string
+    #  is_file: true
+    #sv-merge.brass:
+    #  type: string
+    #  is_file: true
+    #sv-merge.delly:
+    #  type: string
+    #  is_file: true
+    #consensus.git:
+    #strand-bias:
+    #pon:
+
+  tasks:
+    cocleaning:
+      tool: cocleaning
+      input:
+        cwl_source: cocleaning.cwl_source
+        cwl_entry: cocleaning.cwl_entry
+        tumor_bam: tumor_bam
+        normal_bam: normal_bam
+        reference: reference_gz
+        knownIndels: cocleaning.knownIndels
+        knownSites: cocleaning.knownSites
+    muse:
+      tool: muse
+      input:
+        dockstore_tool: muse.dockstore_tool
+        tumor: tumor_bam
+        normal: normal_bam
+        reference: reference_gz
+        known: muse.known
+        known-tbi: muse.known-tbi
+        mode: muse.mode
+    sanger:
+      tool: sanger
+      input:
+        dockstore_tool: sanger.dockstore_tool
+        tumor: tumor_bam
+        normal: normal_bam
+        refFrom: sanger.refFrom
+        bbFrom: sanger.bbFrom
+    delly:
+      input:
+        dockstore_tool: 
+        tumor-bam: tumor_bam
+        normal-bam: normal_bam
+        reference-gz: reference-gz
+        reference-gc: delly.reference-gc
+        exclude-reg: delly.exclude-reg
+        gencode-gz: delly.gencode-gz
+    dkfz:
+      input:
+        dockstore_tool: dkfz.dockstore_tool
+        tumor-bam: tumor_bam
+        normal-bam: normal_bam
+        reference-gz: dkfz.reference-gz
+        delly-bedpe: somatic_bedpe@delly
+
+    # may add more QCs if needed
+    # need add SONG/SCORE upload later
+
+# A workflow is made up with one or more tools
+# Each tool can have its own docker imagine if desirable
+tools:
+  delly:  # https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
+    command: dockstore_tool_runner.py  # for dockstore tools with single CWL file
+    input:
+      dockstore_tool:
+        type: string
+        is_file: true
+      reference-gz:
+        type: string
+        is_file: true
+      reference-gc:
+        type: string
+        is_file: true
+    output:
+      somatic_sv_vcf:  # /tmp/delly.somatic.sv.vcf.gz
+        type: string
+        is_file: true
+      somatic_bedpe:  # /tmp/delly.somatic.sv.bedpe.txt
+        type: string
+        is_file: true
+      cov:  # /tmp/delly.sv.cov.tar.gz
+        type: string
+        is_file: true
+      cov_plots:  # /tmp/delly.sv.cov.plots.tar.gz
+        type: string
+        is_file: true
+      germline_sv_vcf:  # /tmp/delly.germline.sv.vcf.gz
+        type: string
+        is_file: true
+      germline_bedpe:  # /tmp/delly.germline.sv.bedpe.txt
+        type: string
+        is_file: true
+      sv_log:  # /tmp/delly.sv.log.tar.gz
+        type: string
+        is_file: true
+      sv_timing:  # /tmp/delly.sv.timing.json
+        type: string
+        is_file: true
+      sv_qc:  # /tmp/delly.sv.qc.json
+        type: string
+        is_file: true
+
+  dkfz:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/blob/develop/Dockstore.json
+    command: dockstore_tool_runner.py  # for dockstore tools with single CWL file
+    input:
+      dockstore_tool:
+        type: string
+        is_file: true
+      tumor-bam:
+        type: string
+        is_file: true
+      normal-bam:
+        type: string
+        is_file: true
+      reference-gz:
+        type: string
+        is_file: true
+      delly-bedpe:
+        type: string
+        is_file: true
+    output:
+      germline_indel_vcf_gz:  # /media/large_volume/output/germline.indel.vcf.gz
+      somatic_snv_mnv_vcf_gz:  # /media/large_volume/output/somatic.snv.mnv.vcf.gz
+      germline_snv_mnv_vcf_gz:  # /media/large_volume/output/germline.snv.mnv.vcf.gz
+      somatic_cnv_tar_gz:  # /media/large_volume/output/somatic.cnv.tar.gz
+      somatic_cnv_vcf_gz:  # /media/large_volume/output/somatic.cnv.vcf.gz
+      somatic_indel_tar_gz:  # /media/large_volume/output/somatic.indel.tar.gz
+      somatic_snv_mnv_tar_gz:  # /media/large_volume/output/somatic.snv.mnv.tar.gz
+      somatic_indel_vcf_gz:  # /media/large_volume/output/somatic.indel.vcf.gz
+
+  sanger:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/CGP-Somatic-Docker/blob/develop/Dockstore_cwl.json
+    command: dockstore_tool_runner.py  # for dockstore tools with single CWL file
+    input:
+      dockstore_tool:
+        type: string
+        is_file: true
+      tumor:
+        type: string
+        is_file: true
+      normal:
+        type: string
+        is_file: true
+      refFrom:
+        type: string
+        is_file: true
+      bbFrom:
+        type: string
+        is_file: true
+    output:
+      somatic_snv_mnv_tar_gz:
+        type: string
+        is_file: true
+      somatic_cnv_tar_gz:
+        type: string
+        is_file: true
+      somatic_sv_tar_gz:
+        type: string
+        is_file: true
+      somatic_indel_tar_gz:
+        type: string
+        is_file: true
+      somatic_imputeCounts_tar_gz:
+        type: string
+        is_file: true
+      somatic_genotype_tar_gz:
+        type: string
+        is_file: true
+      somatic_verifyBamId_tar_gz:
+        type: string
+        is_file: true
+
+  cocleaning:  # https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning
+    command: cwl_workflow_runner.py
+    input:  # https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/blob/master/gatk-cocleaning-workflow.input.yaml
+      cwl_source:   # github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning:0.1.1
+        type: string
+        is_file: true
+      cwl_entry:  # gatk-cocleaning-workflow.cwl
+        type: tring
+        is_file: true
+      tumor_bam:
+        type: string
+        is_file: true
+      normal_bam:
+        type: string
+        is_file: true
+      reference:
+        type: string
+        is_file: true
+      knownIndels:
+        type: string
+        is_file: true
+      knownSites:
+        type: string
+        is_file: true
+    output:
+      cleaned_tumor_bam:
+        type: string
+        is_file: true
+      cleaned_normal_bam:
+        type: string
+        is_file: true
+
+  muse:  # https://dockstore.org:443/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-muse/versions/0.1.3/plain-CWL/descriptor/%2Fmuse.cwl
+    command: dockstore_tool_running.py
+    input:
+      dockstore_tool:
+        type: string
+        is_file: true
+      tumor:
+        type: string
+        is_file: true
+      normal:
+        type: string
+        is_file: true
+      reference:
+        type: string
+        is_file: true
+      mode:
+        type: string
+      known:
+        type: string
+        is_file: true
+      known-tbi:
+        type: string
+        is_file: true
+    output:
+      mutations:  # muse.vcf
+        type: string
+        is_file: true
+
+  broad:
+    command: dockstore_tool_running.py
+    input:
+    output:
