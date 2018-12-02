@@ -71,7 +71,7 @@ workflow:
     cocleaning.cwl_source:  # for dockstore workflow, we need download the package of all CWL files
       type: string
       is_file: true
-      default: "https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/archive/0.1.1.tar.gz"
+      default: "github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning:0.1.1"
     cocleaning.cwl_entry:  # more details to be figured out
       type: string
       is_file: true
@@ -374,7 +374,7 @@ tools:
         type: string
         is_file: true
 
-  broad:
+  broad:  # to be completed later
     command: dockstore_tool_running.py
     input:
     output:
