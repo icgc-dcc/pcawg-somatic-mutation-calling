@@ -377,4 +377,16 @@ tools:
   broad:  # to be completed later
     command: dockstore_tool_running.py
     input:
+      dockstore_tool:
+        type: string
+        is_file: true
+      tumor:
+        type: string
+        is_file: true
+      normal:
+        type: string
+        is_file: true
     output:
+      vcfs:
+        type: string
+        is_file: true
