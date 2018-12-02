@@ -184,7 +184,7 @@ workflow:
     delly:
       tool: delly
       input:
-        dockstore_tool: 
+        dockstore_tool: delly.dockstore_tool
         tumor-bam: tumor_bam
         normal-bam: normal_bam
         reference-gz: reference-gz
