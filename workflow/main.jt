@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.1"
+  version: "0.0.2"
 
   env_var:
     SCORE_TOKEN:
@@ -79,15 +79,16 @@ workflow:
     cocleaning.knownIndels:
       type: string
       is_file: true
-      default:
-        - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz"
-        - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz"
+      default: "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz"
+      # does not support list for default yet
+      #  - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz"
+      #  - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz"
     cocleaning.knownIndelsTbi:
       type: string
       is_file: true
-      default:
-        - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi"
-        - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi"
+      default: "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi"
+      #  - "[1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/1000G_phase1.indels.hg19.sites.fixed.vcf.gz.tbi"
+      #  - "[Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf.gz.tbi"
     cocleaning.knownSites:
       type: string
       is_file: true
