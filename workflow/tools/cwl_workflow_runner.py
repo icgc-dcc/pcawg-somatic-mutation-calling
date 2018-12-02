@@ -9,9 +9,10 @@ import subprocess
 
 
 task_dict = json.loads(sys.argv[1])
+task_input = task_dict['input']
 
-cwl_source = task_dict['cwl_source']
-cwl_entry = task_dict['cwl_entry']
+cwl_source = task_input['cwl_source']
+cwl_entry = task_input['cwl_entry']
 
 m = re.match('(.+\/.+\/(.+)):(.+)', cwl_source)
 
@@ -33,7 +34,10 @@ input_template = subprocess.check_output(["cwltool",
 
 input_json = yaml.load(input_template)
 
-exit({
-        "task_dict": task_dict,
-        "input_json_template": input_json
-    })
+output_dict = {
+                "task_dict": task_dict,
+                "input_json_template": input_json
+              }
+
+with open('output.json', 'w') as f:
+    f.write(json.dumps(output_dict, indent=2))

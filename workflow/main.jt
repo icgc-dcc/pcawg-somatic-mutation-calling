@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.3"
+  version: "0.0.4"
 
   env_var:
     SCORE_TOKEN:
@@ -44,7 +44,7 @@ workflow:
       type: string
       is_file: true
       default: "[human.hg19.excl.tsv]https://bitbucket.org/weischenfeldt/pcawg_delly_workflow/raw/bfb1820f0c8458f1539e42431aea240d1fb31fe7/delly_docker/extra_data/human.hg19.excl.tsv"
-    gencode-gz:
+    delly.gencode-gz:
       type: string
       is_file: true
       default: "[gencode_sort.v19.bed.gz]https://bitbucket.org/weischenfeldt/pcawg_delly_workflow/raw/3b986488d6846525ac31eb2dec3421f4c2a6befc/delly_docker/extra_data/gencode_sort.v19.bed.gz"
@@ -63,11 +63,11 @@ workflow:
     sanger.refFrom:
       type: string
       is_file: true
-      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_CGP_refBundle.tar.gz"
+      default: "[GRCh37d5_CGP_refBundle.tar.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_CGP_refBundle.tar.gz"
     sanger.bbFrom:
       type: string
       is_file: true
-      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_battenberg.tar.gz"
+      default: "[GRCh37d5_battenberg.tar.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-sanger/GRCh37d5_battenberg.tar.gz"
     cocleaning.cwl_source:  # for dockstore workflow, we need download the package of all CWL files
       type: string
       is_file: true
@@ -188,7 +188,7 @@ workflow:
         dockstore_tool: delly.dockstore_tool
         tumor-bam: tumor_bam
         normal-bam: normal_bam
-        reference-gz: reference-gz
+        reference-gz: reference_gz
         reference-gc: delly.reference-gc
         exclude-reg: delly.exclude-reg
         gencode-gz: delly.gencode-gz
