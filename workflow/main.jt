@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.2"
+  version: "0.0.3"
 
   env_var:
     SCORE_TOKEN:
@@ -168,8 +168,8 @@ workflow:
       tool: muse
       input:
         dockstore_tool: muse.dockstore_tool
-        tumor: tumor_bam
-        normal: normal_bam
+        tumor: cleaned_tumor_bam@cocleaning
+        normal: cleaned_normal_bam@cocleaning
         reference: reference_gz
         known: muse.known
         known-tbi: muse.known-tbi
@@ -350,7 +350,7 @@ tools:
         is_file: true
 
   muse:  # https://dockstore.org:443/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-muse/versions/0.1.3/plain-CWL/descriptor/%2Fmuse.cwl
-    command: dockstore_tool_running.py
+    command: dockstore_tool_runner.py
     input:
       dockstore_tool:
         type: string
@@ -378,7 +378,7 @@ tools:
         is_file: true
 
   broad:  # to be completed later
-    command: dockstore_tool_running.py
+    command: dockstore_tool_runner.py
     input:
       dockstore_tool:
         type: string
