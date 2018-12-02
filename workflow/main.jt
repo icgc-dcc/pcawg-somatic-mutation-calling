@@ -182,6 +182,7 @@ workflow:
         refFrom: sanger.refFrom
         bbFrom: sanger.bbFrom
     delly:
+      tool: delly
       input:
         dockstore_tool: 
         tumor-bam: tumor_bam
@@ -191,6 +192,7 @@ workflow:
         exclude-reg: delly.exclude-reg
         gencode-gz: delly.gencode-gz
     dkfz:
+      tool: dkfz
       input:
         dockstore_tool: dkfz.dockstore_tool
         tumor-bam: tumor_bam
