@@ -25,8 +25,8 @@ else:
     exit('CWL source Git repo incorrect: %s' % cwl_source)
 
 # maybe git pull submodules as well?
-command = 'rm -fr repo_name && git clone %s && cd %s && git checkout %s' % \
-            (git_url, repo_name, release_tag)
+command = 'rm -fr %s && git clone %s && cd %s && git checkout %s' % \
+            (repo_name, git_url, repo_name, release_tag)
 
 subprocess.call(command, shell=True)
 
