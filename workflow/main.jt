@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.4"
+  version: "0.0.5"
 
   env_var:
     SCORE_TOKEN:
@@ -51,11 +51,11 @@ workflow:
     dkfz.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/blob/develop/Dockstore.json
       type: string
       is_file: true
-      default: "[dkfz-caller.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-dkfz-workflow/versions/develop/plain-CWL/descriptor/%2FDockstore.cwl"
+      default: "[dkfz-caller_2.0.7_cwl1.0.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/2.0.7_cwl1.0/Dockstore.cwl"
     dkfz.reference-gz:
       type: string
       is_file: true
-      default: "https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-dkfz/dkfz-workflow-dependencies_150318_0951.tar.gz"
+      default: "[dkfz-workflow-dependencies_150318_0951.tar.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-dkfz/dkfz-workflow-dependencies_150318_0951.tar.gz"
     sanger.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/CGP-Somatic-Docker/blob/develop/Dockstore_cwl.json
       type: stirng
       is_file: true
