@@ -40,7 +40,23 @@ input_json = yaml.load(input_template)
 for i in input_json:
     if i == 'run-id':
         input_json[i] = 'run-id'
-    elif input_json[i] is None or isinstance(input_json[i], str):
+    elif isinstance(input_json[i], str):
+        input_json[i] = task_input[i]
+    elif input_json[i] is None and isinstance(task_input[i], str):
+        input_json[i] = task_input[i]
+    # cwltool make-template does not do good job with 'null' in template
+    elif input_json[i] is None and \
+            isinstance(task_input[i], list) and \
+            len(task_input[i]) > 0 and \
+            task_input[i][0].startswith('/'):  # a bit hacky here, assume it's a local file
+        input_json[i] = []
+        for f in task_input[i]:
+            input_json[i].append(
+                    {
+                        'class': 'File',
+                        'path': f
+                    }
+                )
         input_json[i] = task_input[i]
     elif isinstance(input_json[i], dict) and input_json[i].get('class') == 'File':
         input_json[i]['path'] = task_input[i]
