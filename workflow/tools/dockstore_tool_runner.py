@@ -41,7 +41,6 @@ for i in input_json:
                         'path': f
                     }
                 )
-        input_json[i] = task_input[i]
     elif isinstance(input_json[i], dict) and input_json[i].get('class') == 'File':
         input_json[i]['path'] = task_input[i]
     else:

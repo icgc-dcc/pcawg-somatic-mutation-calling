@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.7"
+  version: "0.0.8"
 
   env_var:
     SCORE_TOKEN:
@@ -76,6 +76,18 @@ workflow:
       type: string
       is_file: true
       default: gatk-cocleaning-workflow.cwl
+    cocleaning.reference
+      type: string
+      is_file: true
+      default:  # needs to add default to dcc portal, use local for now
+    cocleaning.reference_fai
+      type: string
+      is_file: true
+      default:  # needs to add default to dcc portal, use local for now
+    cocleaning.reference_dict
+      type: string
+      is_file: true
+      default: "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.dict"
     cocleaning.knownIndels:
       type: string
       is_file: true
@@ -162,9 +174,13 @@ workflow:
         cwl_entry: cocleaning.cwl_entry
         tumor_bam: tumor_bam
         normal_bam: normal_bam
-        reference: reference_gz
+        reference: cocleaning.reference
+        reference_fai: cocleaning.reference_fai
+        reference_dict: cocleaning.reference_dict
         knownIndels: cocleaning.knownIndels
+        knownIndelsTbi: cocleaning.knownIndelsTbi
         knownSites: cocleaning.knownSites
+        knownSitesTbi: cocleaning.knownSitesTbi
     muse:
       tool: muse
       input:
