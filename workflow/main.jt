@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.8"
+  version: "0.0.9"
 
   env_var:
     SCORE_TOKEN:
@@ -28,10 +28,6 @@ workflow:
       type: string
       is_file: true
       default: "[genome.fa.gz.fai]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.fa.gz.fai"
-    reference_dict:
-      type: string
-      is_file: true
-      default: "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.dict"
     delly.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
       type: string
       is_file: true
@@ -80,14 +76,14 @@ workflow:
       type: string
       is_file: true
       default:  # needs to add default to dcc portal, use local for now
-    cocleaning.reference_fai:
+    cocleaning.reference_fai:  # this needs to go along with 'cocleaning.reference' in the same folder
       type: string
       is_file: true
       default:  # needs to add default to dcc portal, use local for now
-    cocleaning.reference_dict:
+    cocleaning.reference_dict:  # this needs to go along with 'cocleaning.reference' in the same folder
       type: string
       is_file: true
-      default: "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.dict"
+      default:  # needs to add default to dcc portal, use local for now
     cocleaning.knownIndels:
       type: string
       is_file: true
