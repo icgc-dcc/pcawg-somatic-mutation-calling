@@ -76,15 +76,15 @@ workflow:
       type: string
       is_file: true
       default: gatk-cocleaning-workflow.cwl
-    cocleaning.reference
+    cocleaning.reference:
       type: string
       is_file: true
       default:  # needs to add default to dcc portal, use local for now
-    cocleaning.reference_fai
+    cocleaning.reference_fai:
       type: string
       is_file: true
       default:  # needs to add default to dcc portal, use local for now
-    cocleaning.reference_dict
+    cocleaning.reference_dict:
       type: string
       is_file: true
       default: "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.dict"
