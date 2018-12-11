@@ -95,17 +95,22 @@ if p.returncode != 0:  # cwltool run failed
 output_dict = dict()
 
 if repo_name == 'pcawg-gatk-cocleaning':
-    output_file = os.path.join(os.getcwd(), cwl_outdir, 'printreads_tumor/output/*.cleaned.bam')
-    if os.path.isfile(output_file):
-        output_dict['cleaned_tumor_bam'] = output_file[0]
-    else:
-        exit('BQSR CoCleaning failed to produce output for cleaned_tumor_bam!')
-
-    output_file = os.path.join(os.getcwd(), cwl_outdir, 'printreads_normal/output/*.cleaned.bam')
-    if os.path.isfile(output_file):
-        output_dict['cleaned_normal_bam'] = output_file[0]
-    else:
-        exit('BQSR CoCleaning failed to produce output for cleaned_normal_bam!')
+    for bamtype in ['normal', 'tumor']:
+        # get the basename of the input normal/tumor bams
+        bambase = os.path.basename(input_json[bamtype+'_bam']['path']).replace('.bam', '.realigned.cleaned.bam')
+        output_file = os.path.join(os.getcwd(), cwl_outdir, bambase)
+        if os.path.isfile(output_file):
+            output_dict['cleaned_'+bamtype+'_bam'] = output_file
+        else:
+            exit('BQSR CoCleaning failed to produce output for cleaned_%s_bam!' % bamtype)
+        # get the basename of the bai files
+        baibase = os.path.basename(input_json[bamtype+'_bam']['path']).replace('.bam', '.realigned.cleaned.bai')
+        output_file = os.path.join(os.getcwd(), cwl_outdir, baibase)
+        if os.path.isfile(output_file):
+            # For bai file, create link with name following the file name convention
+            os.symlink(output_file, output_dict['cleaned_'+bamtype+'_bam']+'.bai')
+        else:
+            exit('BQSR CoCleaning failed to produce bai for cleaned_%s_bam!' % bamtype)
 
 else:
     exit('Unknown workflow from git repo: %s' % repo_name)
