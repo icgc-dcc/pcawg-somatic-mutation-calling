@@ -118,7 +118,10 @@ workflow:
       type: string
       is_file: true
       default: "[dbsnp_132_b37.leftAligned.vcf.gz.tbi]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/dbsnp_132_b37.leftAligned.vcf.gz.tbi"
-
+    muse.mode:
+      type: string
+      is_file: false
+      default: wgs
     # broad will be added later using local docker run as it's not registered in dockstore yet
     #broad.cwl_tool:
     #  type: string
