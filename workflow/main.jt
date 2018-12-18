@@ -166,13 +166,21 @@ workflow:
     #pon:
 
   tasks:
+    download_normal_bam:
+      tool: download_file
+      input:
+        file_name: normal_bam
+    download_tumor_bam:
+      tool: download_file
+      input:
+        file_name: tumor_bam
     cocleaning:
       tool: cocleaning
       input:
         cwl_source: cocleaning.cwl_source
         cwl_entry: cocleaning.cwl_entry
-        tumor_bam: tumor_bam
-        normal_bam: normal_bam
+        tumor_bam: download_tumor_bam@file_path
+        normal_bam: download_normal_bam@file_path
         reference: cocleaning.reference
         reference_fai: cocleaning.reference_fai
         reference_dict: cocleaning.reference_dict
@@ -194,16 +202,16 @@ workflow:
       tool: sanger
       input:
         dockstore_tool: sanger.dockstore_tool
-        tumor: tumor_bam
-        normal: normal_bam
+        tumor: download_tumor_bam@file_path
+        normal: download_normal_bam@file_path
         refFrom: sanger.refFrom
         bbFrom: sanger.bbFrom
     delly:
       tool: delly
       input:
         dockstore_tool: delly.dockstore_tool
-        tumor-bam: tumor_bam
-        normal-bam: normal_bam
+        tumor-bam: download_tumor_bam@file_path
+        normal-bam: download_normal_bam@file_path
         reference-gz: reference_gz
         reference-gc: delly.reference-gc
         exclude-reg: delly.exclude-reg
@@ -212,8 +220,8 @@ workflow:
       tool: dkfz
       input:
         dockstore_tool: dkfz.dockstore_tool
-        tumor-bam: tumor_bam
-        normal-bam: normal_bam
+        tumor-bam: download_tumor_bam@file_path
+        normal-bam: download_normal_bam@file_path
         reference-gz: dkfz.reference-gz
         delly-bedpe: somatic_bedpe@delly
 
@@ -407,5 +415,15 @@ tools:
         is_file: true
     output:
       vcfs:
+        type: string
+        is_file: true
+
+  download_file:
+    command: download_file.py
+    input:
+      file_name: string
+      is_file: true
+    output:
+      file_path:
         type: string
         is_file: true
