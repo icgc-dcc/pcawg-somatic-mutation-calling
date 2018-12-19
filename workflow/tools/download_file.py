@@ -25,12 +25,13 @@ if str(file_path).startswith('song://'):
     score_container = "overture/score:1.5.0"
     subprocess.check_output(['docker','run',
                              '-e','ACCESSTOKEN',
+                             '-v', '%s:%s' % (outdir, '/home/ubuntu'),
                              score_container,
                              'bin/score-client',
                              '--profile', profile,
                              'download',
                              '--object-id', object_id,
-                             '--output-dir', outdir])
+                             '--output-dir', '/home/ubuntu'])
 
     for f in os.listdir(outdir):
         if f.endswith('.bam'):
