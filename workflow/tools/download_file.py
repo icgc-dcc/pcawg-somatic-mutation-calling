@@ -23,14 +23,14 @@ if str(file_path).startswith('song://'):
     os.makedirs(outdir, exist_ok=True)
 
     score_container = "overture/score:1.5.0"
-    subprocess.check_output(['docker', 'pull', score_container])
-    subprocess.check_output(['docker','run','-it',
+    subprocess.check_output(['docker','run',
                              '-e','ACCESSTOKEN',
-                             'overture/score',
+                             score_container,
+                             'bin/score-client',
+                             '--profile', profile,
                              'download',
-                             '--profile'+profile,
-                             '--object-id'+object_id,
-                             '--output-dir',outdir])
+                             '--object-id', object_id,
+                             '--output-dir', outdir])
 
     for f in os.listdir(outdir):
         if f.endswith('.bam'):
