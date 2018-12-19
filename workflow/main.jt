@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.10"
+  version: "0.0.11"
 
   env_var:
     SCORE_TOKEN:
