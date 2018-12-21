@@ -2,7 +2,7 @@
 
 workflow:
   name:  pcawg-somatic-mutation-calling
-  version: "0.0.11"
+  version: "0.0.12"
 
   env_var:
     SCORE_TOKEN:
@@ -75,15 +75,15 @@ workflow:
     cocleaning.reference:
       type: string
       is_file: true
-      default:  # needs to add default to dcc portal, use local for now
+      default:  "[genome.fa]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/genome.fa"
     cocleaning.reference_fai:  # this needs to go along with 'cocleaning.reference' in the same folder
       type: string
       is_file: true
-      default:  # needs to add default to dcc portal, use local for now
+      default:  "[genome.fa.fai]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/genome.fa.fai"
     cocleaning.reference_dict:  # this needs to go along with 'cocleaning.reference' in the same folder
       type: string
       is_file: true
-      default:  # needs to add default to dcc portal, use local for now
+      default:  "[genome.dict]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-gatk-cocleaning/genome.dict"
     cocleaning.knownIndels:
       type: string
       is_file: true
