@@ -47,7 +47,7 @@ workflow:
     dkfz.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/blob/develop/Dockstore.json
       type: string
       is_file: true
-      default: "[dkfz-caller_2.0.7_cwl1.0.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/2.0.7_cwl1.0/Dockstore.cwl"
+      default: "[dkfz-caller.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/2.0.8_cwl1.0/Dockstore.cwl"
     dkfz.reference-gz:
       type: string
       is_file: true
