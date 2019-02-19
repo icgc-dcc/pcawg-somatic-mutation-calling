@@ -28,10 +28,11 @@ workflow:
       type: string
       is_file: true
       default: "[genome.fa.gz.fai]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.fa.gz.fai"
+    ## TODO: make a release for DELLY so we have a stable reference
     delly.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
       type: string
       is_file: true
-      default: "[delly-sv.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg_delly_workflow/versions/develop/plain-CWL/descriptor/%2Fdelly_docker%2FDockstore.cwl"
+      default: "[delly-sv.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/61d3894df3d5ecc525118f6f83622af09dbaa278/delly_docker/Dockstore.cwl"  # 'develop' branch up to this time: Feb 18, 2019. Docker image: quay.io/pancancer/pcawg_delly_workflow:feature_gosu_and_icgc_portal
     delly.reference-gc:
       type: string
       is_file: true
@@ -44,18 +45,18 @@ workflow:
       type: string
       is_file: true
       default: "[gencode_sort.v19.bed.gz]https://bitbucket.org/weischenfeldt/pcawg_delly_workflow/raw/3b986488d6846525ac31eb2dec3421f4c2a6befc/delly_docker/extra_data/gencode_sort.v19.bed.gz"
-    dkfz.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/blob/develop/Dockstore.json
+    dkfz.dockstore_tool:
       type: string
       is_file: true
-      default: "[dkfz-caller.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/2.0.8_cwl1.0/Dockstore.cwl"
+      default: "[dkfz-caller.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/dkfz_dockered_workflows/2.0.8_cwl1.0/Dockstore.cwl"  # git commit hash: ef2df8e8cd0363ed8f6cd810747d22aac5397762
     dkfz.reference-gz:
       type: string
       is_file: true
       default: "[dkfz-workflow-dependencies_150318_0951.tar.gz]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-dkfz/dkfz-workflow-dependencies_150318_0951.tar.gz"
-    sanger.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/CGP-Somatic-Docker/blob/develop/Dockstore_cwl.json
+    sanger.dockstore_tool:
       type: stirng
       is_file: true
-      default: "[sanger-caller.cwl]https://dockstore.org/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-sanger-cgp-workflow/versions/develop/plain-CWL/descriptor/%2FDockstore.cwl"
+      default: "[sanger-caller.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/CGP-Somatic-Docker/2.0.3/Dockstore.cwl"  # git commit hash: 59c637e1534c2dc8a8e428169d48e2894bc658b8
     sanger.refFrom:
       type: string
       is_file: true
@@ -67,11 +68,11 @@ workflow:
     cocleaning.cwl_source:  # for dockstore workflow, we need download the package of all CWL files
       type: string
       is_file: true
-      default: "github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning:0.1.1"
-    cocleaning.cwl_entry:  # more details to be figured out
+      default: "github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning:0.1.1"  # git repo + release tag (hash: 562ec2da6a263a9aba45dd0368b9cca5923dcc8c)
+    cocleaning.cwl_entry:
       type: string
       is_file: true
-      default: gatk-cocleaning-workflow.cwl
+      default: gatk-cocleaning-workflow.cwl  # entry point
     cocleaning.reference:
       type: string
       is_file: true
@@ -109,7 +110,7 @@ workflow:
     muse.dockstore_tool:
       type: string
       is_file: true
-      default: "[muse.cwl]https://dockstore.org:443/api/api/ga4gh/v2/tools/quay.io%2Fpancancer%2Fpcawg-muse/versions/0.1.3/plain-CWL/descriptor/%2Fmuse.cwl"
+      default: "[muse.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pcawg-muse/0.1.3/muse.cwl"  # commit hash: f9eb0230391552e12344cdbe87497075f10717ac
     muse.known:
       type: string
       is_file: true
