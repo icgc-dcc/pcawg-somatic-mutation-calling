@@ -32,7 +32,7 @@ workflow:
     delly.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
       type: string
       is_file: true
-      default: "[delly-sv.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/61d3894df3d5ecc525118f6f83622af09dbaa278/delly_docker/Dockstore.cwl"  # 'develop' branch up to this time: Feb 18, 2019. Docker image: quay.io/pancancer/pcawg_delly_workflow:feature_gosu_and_icgc_portal
+      default: "[delly-sv.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/2.0.2-cwl1.0/delly_docker/Dockstore.cwl"  # commit hash: 61d3894df3d5ecc525118f6f83622af09dbaa278. Docker image: quay.io/pancancer/pcawg_delly_workflow:feature_gosu_and_icgc_portal
     delly.reference-gc:
       type: string
       is_file: true
