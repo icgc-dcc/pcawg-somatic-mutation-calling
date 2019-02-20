@@ -28,8 +28,7 @@ workflow:
       type: string
       is_file: true
       default: "[genome.fa.gz.fai]https://dcc.icgc.org/api/v1/download?fn=/PCAWG/reference_data/pcawg-bwa-mem/genome.fa.gz.fai"
-    ## TODO: make a release for DELLY so we have a stable reference
-    delly.dockstore_tool:  # job json at github: https://github.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/blob/develop/delly_docker/Dockstore.json
+    delly.dockstore_tool:
       type: string
       is_file: true
       default: "[delly-sv.cwl]https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pcawg_delly_workflow/2.0.2-cwl1.0/delly_docker/Dockstore.cwl"  # commit hash: 61d3894df3d5ecc525118f6f83622af09dbaa278. Docker image: quay.io/pancancer/pcawg_delly_workflow:feature_gosu_and_icgc_portal
