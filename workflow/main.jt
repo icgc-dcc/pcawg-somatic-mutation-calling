@@ -12,6 +12,9 @@ workflow:
       type: string
       is_required: true
   input:
+    tumor_aliquot_id:
+      type: string
+      is_required: true
     tumor_bam:
       type: string
       is_file: true
@@ -216,6 +219,7 @@ workflow:
         reference-gc: delly.reference-gc
         exclude-reg: delly.exclude-reg
         gencode-gz: delly.gencode-gz
+        run-id: tumor_aliquot_id
     dkfz:
       tool: dkfz
       input:
@@ -224,6 +228,7 @@ workflow:
         normal-bam: file_path@download_normal_bam
         reference-gz: dkfz.reference-gz
         delly-bedpe: somatic_bedpe@delly
+        run-id: tumor_aliquot_id
 
     # may add more QCs if needed
     # need add SONG/SCORE upload later
@@ -237,12 +242,20 @@ tools:
       dockstore_tool:
         type: string
         is_file: true
+      tumor-bam:
+        type: string
+        is_file: true
+      normal-bam:
+        type: string
+        is_file: true
       reference-gz:
         type: string
         is_file: true
       reference-gc:
         type: string
         is_file: true
+      run-id:
+        type: string
     output:
       somatic_sv_vcf:  # /tmp/delly.somatic.sv.vcf.gz
         type: string
@@ -290,6 +303,9 @@ tools:
       delly-bedpe:
         type: string
         is_file: true
+      run-id:
+        type: string
+
     output:
       germline_indel_vcf_gz:  # /media/large_volume/output/germline.indel.vcf.gz
       somatic_snv_mnv_vcf_gz:  # /media/large_volume/output/somatic.snv.mnv.vcf.gz

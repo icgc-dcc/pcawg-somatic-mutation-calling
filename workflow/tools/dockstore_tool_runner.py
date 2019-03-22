@@ -22,9 +22,7 @@ input_template = subprocess.check_output(["cwltool",
 input_json = yaml.load(input_template)
 
 for i in input_json:
-    if i == 'run-id':
-        input_json[i] = 'run-id'
-    elif isinstance(input_json[i], str):
+    if isinstance(input_json[i], str):
         input_json[i] = task_input[i]
     elif input_json[i] is None and isinstance(task_input[i], str):
         input_json[i] = task_input[i]
